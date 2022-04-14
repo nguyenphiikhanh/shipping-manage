@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -15,15 +17,50 @@ class LoginController extends Controller
     {
         //
         return view('home');
-
     }
 
     public function login(Request $request)
     {
         //
-        // return view('home');
-        dd($request->all());
+        $loginInfo = [
+            'phone_number' => $request->phone_number,
+            'password' => $request->password,
+        ];
+        if (Auth::attempt($loginInfo)) {
+            $user = User::find(Auth::user()->id);
+            if ($user->role == "admin") {
+                return redirect()->route('admin-home');
+            } elseif ($user->role == "shipper") {
+                return redirect()->route('shipper-home');
+            } else return redirect()->route('customer-home');
+        } else {
+            $alert = "
+            <script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+            <script>
+             Swal.fire({
+                 icon: 'error',
+                 text: 'Số điện thoại hoặc mật khẩu không chính xác, vui lòng thử lại!',
+                 showConfirmButton: true,
+               })
+               </script>";
 
+            return view('home', compact('alert'));
+        }
+    }
+
+    public function adminHome()
+    {
+        return view('admin.home');
+    }
+
+    public function shipperHome()
+    {
+        return view('shipper.home');
+    }
+
+    public function customerHome()
+    {
+        return view('customer.home');
     }
     /**
      * Show the form for creating a new resource.

@@ -15,11 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('login-page');
 });
 
-Auth::routes();
 
-Route::get('/dang-nhap', 'LoginController@index')->name('login');
+Route::get('/dang-nhap', 'LoginController@index')->name('login-page')->middleware('auth.role');
 
+Route::post('/dang-nhap','LoginController@login')->name('login');
 
+Route::prefix('admin')->group(function(){
+    Route::get('/','LoginController@adminHome')->name('admin-home')->middleware('auth');
+});
+
+Route::get('/trang-chu/nhan-vien','LoginController@shipperHome')->name('shipper-home')->middleware('auth','auth.role');
+Route::get('/trang-chu/khach-hang','LoginController@CustomerHome')->name('customer-home')->middleware('auth','auth.role');
