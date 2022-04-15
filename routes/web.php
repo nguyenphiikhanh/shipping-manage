@@ -19,13 +19,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dang-nhap', 'LoginController@index')->name('login-page')->middleware('auth.role');
+Route::get('/dang-nhap', 'LoginController@index')->name('login-page')->middleware('login.check');
 
 Route::post('/dang-nhap','LoginController@login')->name('login');
 
 Route::prefix('admin')->group(function(){
-    Route::get('/','LoginController@adminHome')->name('admin-home')->middleware('auth');
+    Route::get('/','LoginController@adminHome')->name('admin-home')->middleware('cookies.check','role.admin');
 });
 
-Route::get('/trang-chu/nhan-vien','LoginController@shipperHome')->name('shipper-home')->middleware('auth','auth.role');
-Route::get('/trang-chu/khach-hang','LoginController@CustomerHome')->name('customer-home')->middleware('auth','auth.role');
+Route::get('/trang-chu/nhan-vien','LoginController@shipperHome')->name('shipper-home')->middleware('cookies.check','role.shipper');
+Route::get('/trang-chu/khach-hang','LoginController@CustomerHome')->name('customer-home')->middleware('cookies.check','role.customer');

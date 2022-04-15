@@ -16,4 +16,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $guarded = [];
+
+    // public function isAdmin(){
+    //     return $this->role == 'admin';
+    // }
+
+    // public function isCustomer(){
+    //     return $this->role == 'customer';
+    // }
+    // public function isShipper(){
+    //     return $this->role == 'shipper';
+    // }
 }
