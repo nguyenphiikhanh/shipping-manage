@@ -24,7 +24,10 @@ Route::get('/dang-nhap', 'LoginController@index')->name('login-page')->middlewar
 Route::post('/dang-nhap','LoginController@login')->name('login');
 
 Route::prefix('admin')->group(function(){
-    Route::get('/','LoginController@adminHome')->name('admin-home')->middleware('cookies.check','role.admin');
+    Route::get('/',function(){
+        return redirect()->route('admin-home');
+    });
+    Route::get('/dashboard','LoginController@adminHome')->name('admin-home')->middleware('cookies.check','role.admin');
 });
 
 Route::get('/trang-chu/nhan-vien','LoginController@shipperHome')->name('shipper-home')->middleware('cookies.check','role.shipper');
