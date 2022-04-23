@@ -12,8 +12,7 @@
     @yield('title')
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" href="apple-icon.png">
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="{{asset('PTTKTT/icon/Untitled-1.jpg')}}">
 
     <link rel="stylesheet" href="{{asset('main_template/vendors/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('main_template/vendors/font-awesome/css/font-awesome.min.css')}}">
